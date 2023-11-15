@@ -9,15 +9,15 @@ const listingRouter = require('./routes/listing-routes.js')
 const path = require('path') 
 dotenv.config() 
 const app = express()
-const __dirname = path.resolve()
+const dirname = path.resolve()
 app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use('/api/users',userRouter)
 app.use('/api/listings', listingRouter)
-app.use(express.static(path.join(__dirname, `client/dist`)))
+app.use(express.static(path.join(dirname, `client/dist`)))
 app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/client/dist/index.html'))
+    res.sendFile(path.join(dirname,'/client/dist/index.html'))
 })
 app.use((req, res,next)=>{
     return next(handleError("Could not find this route", 404))
