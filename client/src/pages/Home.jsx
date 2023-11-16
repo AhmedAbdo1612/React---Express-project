@@ -67,7 +67,7 @@ export default function Home() {
         </Link>
       </div>
       {/* swiper*/}
-      <div className="px-8" data-aos= 'fade-up' data-aos-delay = '1000'>
+      <div className="px-8" data-aos= 'fade-up' data-aos-delay = '500'>
         <Swiper
           navigation={true}
           loop={true}
