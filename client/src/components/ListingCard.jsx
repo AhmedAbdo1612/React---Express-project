@@ -8,7 +8,7 @@ export default function ListingCard({ listing }) {
     AOS.init({duration:2000})
   },[])
   return (
-    <div data-aos='fade-up'
+    <div data-aos='fade-up' 
      className="bg-white shadow-md hover:shadow-lg
      transition-shadow overflow-hidden rounded-lg w-full sm:w-[320px]">
       <Link className=" flex flex-col gap-2" to={`/listing/${listing.id}`}>

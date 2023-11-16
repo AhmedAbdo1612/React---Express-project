@@ -147,8 +147,8 @@ export default function Profile() {
         />
         <img
           onClick={() => fileRef.current.click()}
-          className="mt-5 rounded-full w-24 h-24
-             self-center p-5 cover-object cursor-pointer"
+          className="mt-5 rounded-full w-[150px] h-[150px]
+             self-center p-5 cursor-pointer object-cover"
           src={formData.avatar || currentUser.avatar}
           alt="user"
         />
