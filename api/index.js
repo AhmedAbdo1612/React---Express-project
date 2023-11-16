@@ -12,7 +12,7 @@ const app = express()
 const dirname = path.resolve()
 app.use(bodyParser.json())
 app.use(cookieParser())
-
+console.log(process.version)
 app.use('/api/users',userRouter)
 app.use('/api/listings', listingRouter)
 app.use(express.static(path.join(dirname, `client/dist`)))

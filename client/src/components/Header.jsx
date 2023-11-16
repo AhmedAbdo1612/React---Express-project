@@ -23,34 +23,36 @@ export default function Header() {
 
   },[location.search])
   return (
-    <header className="bg-slate-200 shadow-md">
-      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+    <header className="bg-slate-700 shadow-md w-full">
+      <div className="flex justify-around w-full  items-center  p-3">
         <Link to="/">
-          <h1 className="fotnt-bold text-sm sm:text-xl flex flex-warp">
-            <span className="text-slate-500">Places</span>
-            <span className="text-slate-900">Market</span>
+          <h1 className="font-bold text-sm sm:text-3xl flex flex-warp">
+            <span className="text-gray-100">Places</span>
+            <span className="text-gray-300">Market</span>
           </h1>
         </Link>
-        <form onSubmit={handleSubmit} className="bg-slate-100 p-3 rounded-lg flex items-center">
+       <div className="max-w-3xl">
+       <form onSubmit={handleSubmit} className="bg-slate-100 p-3 rounded-lg flex items-center">
           <input
             type="text"
             placeholder="Search....."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-transparent focus:outline-none w-24 sm:w-64"
+            className="bg-transparent focus:outline-none w-24 sm:w-[22rem]"
           />
           <button>
             <FaSearch className="text-salte-500" />
           </button>
         </form>
+       </div>
         <ul className="flex list-none gap-6">
           <Link to="/">
-            <li className="flext justify-center  gap-2 hidden  sm:inline  text-slate-700 hover:underline">
+            <li className="flext justify-center  gap-2 hidden  sm:inline  text-white hover:underline">
             Home 
             </li>
           </Link>
           <Link to="/about">
-            <li className="hidden sm:inline  text-slate-700 hover:underline">
+            <li className="hidden sm:inline  text-white hover:underline">
             About
             </li>
           </Link>

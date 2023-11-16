@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import {MdLocationOn} from 'react-icons/md'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+import { useEffect } from "react";
 export default function ListingCard({ listing }) {
+  useEffect(()=>{
+    AOS.init({duration:2000})
+  },[])
   return (
-    <div className="bg-white shadow-md hover:shadow-lg
+    <div data-aos='fade-up'
+     className="bg-white shadow-md hover:shadow-lg
      transition-shadow overflow-hidden rounded-lg w-full sm:w-[320px]">
       <Link className=" flex flex-col gap-2" to={`/listing/${listing.id}`}>
         <img
