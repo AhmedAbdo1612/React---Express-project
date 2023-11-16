@@ -56,7 +56,7 @@ export default function Header() {
             About
             </li>
           </Link>
-          <Link to="profile">
+          <Link to="profile" className="text-white hover:underline">
             {currentUser ? (
               <img
                 className="h-7 w-7 rounded-full object-cover"
@@ -64,7 +64,7 @@ export default function Header() {
                 alt="profile"
               />
             ) : (
-              "Sing in"
+              "Sign in"
             )}
           </Link>
         </ul>
