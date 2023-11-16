@@ -4,11 +4,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import ListingCard from "../components/ListingCard";
+import Aos from "aos"; 
+import 'aos/dist/aos.css'
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
   useEffect(() => {
+    Aos.init({duration:2000})
     async function fetchOfferListings() {
       try {
         const res = await fetch(`/api/listings/search?offer=true&limi=4`);
@@ -46,7 +49,7 @@ export default function Home() {
   return (
     <div>
       {/* top*/}
-      <div className=" flex flex-col gap-6 py-28 px-3 max-w-6xl mx-auto">
+      <div className=" flex flex-col gap-6 py-28 px-3 max-w-6xl mx-auto" data-aos='fade-down'>
         <h1 className="text-3xl font-bold text-slate-700 lg:text-6xl">
           Find Your Next <span className="text-slate-500">Perfect </span> <br />
           Place With Ease
@@ -64,7 +67,7 @@ export default function Home() {
         </Link>
       </div>
       {/* swiper*/}
-      <div className="px-8">
+      <div className="px-8" data-aos= 'fade-down'>
         <Swiper
           navigation={true}
           loop={true}
