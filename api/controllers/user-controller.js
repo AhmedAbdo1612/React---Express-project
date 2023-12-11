@@ -36,7 +36,7 @@ async function signup(req, res, next) {
     }
     try {
         const activationToken = await jwt.sign(user, process.env.ACTIVATION_SERCET, {expiresIn: '5m'})
-        const activationUrl = `http://localhost:5173/activation/${activationToken}`
+        const activationUrl = `https://market-place-x065.onrender.com/activation/${activationToken}`
         await sendMail({
             email : user.email ,
             subject:"Activate your account",
