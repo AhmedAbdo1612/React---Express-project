@@ -5,15 +5,18 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/UserModel')
 const Listing = require('../models/ListingModel')
-async function signup(req, res, next) {
+const createActivationToken = require('../util/activationToken')
+const sendMail = require("../util/sendMail")
 
+async function signup(req, res, next) {
+    
     const error = validationResult(req);
     if (!error.isEmpty()) {
 
         return next(handleError("Invalid input data", 422))
     }
     const { username, email, password } = req.body;
-
+    
     let exsistingUser;
     try {
         exsistingUser = await userModel.findOne({ email: email })
@@ -27,29 +30,55 @@ async function signup(req, res, next) {
         const error = handleError('user exists already, try to log in', 422)
         return next(error)
     }
-    let hashedPassword
+   
+    const user = {
+        email, password, username
+    }
     try {
-        hashedPassword = await bcryptjs.hash(password, 10)
+        const activationToken = await jwt.sign(user, process.env.ACTIVATION_SERCET, {expiresIn: '5m'})
+        const activationUrl = `http://localhost:5173/activation/${activationToken}`
+        await sendMail({
+            email : user.email ,
+            subject:"Activate your account",
+            message:`Hello ${user.username} please click on the link to activate you account:${activationUrl}`
+        })
+       
     }
     catch (err) {
-        const error = handleError("Signing up failed", 500)
-        return next(error)
-    }
-    const createdUser = new userModel({
-        email, password: hashedPassword, username: username
-    })
-    try {
-        await createdUser.save()
-    }
-    catch (err) {
+        console.log(err)
         const error = handleError("Signing up failed", 500)
         return next(error)
     }
 
-    res.status(201).json({
-        email: createdUser.email, id: createdUser.id, success: true, message: 'User created'
-    })
+    res.status(200).json({ message: `please check you email:- ${user.email} to activate you account` })
 }
+// the activation function 
+module.exports.activation = async function(req,res,next){
+try {
+    const {activation_token } = req.body
+    const new_user = await jwt.verify(activation_token, process.env.ACTIVATION_SERCET)
+    if(!new_user){
+        return next(handleError("Invalid acivation token"),400)
+    }
+   
+    const usedEmail = await User.findOne({email:new_user.email})
+    if(usedEmail){
+        return next(handleError("User already exisits, try yo log in instead",422))
+    }
+    const hashedPassword = await bcryptjs.hash(new_user.password, 12)
+    const createdUser = await User.create({
+        email:new_user.email,
+        password:hashedPassword,
+        username:new_user.username
+    })
+    res.status(201).json({email:createdUser.email,id:createdUser.id,message:"User Created"})
+} catch (error) {
+    
+    return next(handleError("Signing up Falied ", 500))
+}
+}
+
+// the signiing in function 
 async function singin(req, res, next) {
     const error = validationResult(req)
     if (!error.isEmpty()) {

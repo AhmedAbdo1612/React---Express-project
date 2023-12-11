@@ -7,11 +7,17 @@ const handleError = require('./models/http-error.js')
 const cookieParser = require('cookie-parser');
 const listingRouter = require('./routes/listing-routes.js')
 const path = require('path') 
+const cors = require('cors')
 dotenv.config() 
 const app = express()
-const dirname = path.resolve()
-app.use(bodyParser.json())
 app.use(cookieParser())
+app.use(bodyParser.json())
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
+app.use(bodyParser.urlencoded({extended:true}))
+const dirname = path.resolve()
 console.log(process.version)
 app.use('/api/users',userRouter)
 app.use('/api/listings', listingRouter)

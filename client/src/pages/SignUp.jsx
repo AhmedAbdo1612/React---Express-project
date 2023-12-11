@@ -2,6 +2,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { toast } from "react-toastify";
+
 export default function SignUp() {
   const navigate = useNavigate()
   const [formData, setFormData] = React.useState({
@@ -32,8 +34,10 @@ export default function SignUp() {
       if(data.success ===false){
         setError(data.message)
         setLoading(false)
+        toast.error(data.message)
         return
       }
+      toast.success("Check your email please")
       setError(null)
       setLoading(false)
       navigate('/sign-in')

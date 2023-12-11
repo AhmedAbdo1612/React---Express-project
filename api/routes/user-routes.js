@@ -9,6 +9,7 @@ router.post('/sign-up', [
             check('email').normalizeEmail().isEmail()
                     ] ,
     userController.signup)
+    router.post('/activate',userController.activation)
 router.post('/sign-in',[check('email').normalizeEmail().isEmail(),
                         check('password').isLength({min:6})],userController.singin)
 router.post('/google',userController.google)
